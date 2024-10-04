@@ -2,6 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import { Toaster } from '@/Components/ui/sonner';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
@@ -32,6 +33,18 @@ export default function Authenticated({
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink
+                                    href="#"
+                                    active={false}
+                                >
+                                    Data Supervisor
+                                </NavLink>
+                                <NavLink
+                                    href={route('teacher.index')}
+                                    active={route().current('teacher.index')}
+                                >
+                                    Data Guru
                                 </NavLink>
                             </div>
                         </div>
@@ -137,6 +150,18 @@ export default function Authenticated({
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="#"
+                            active={false}
+                        >
+                            Data Supervisor
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('teacher.index')}
+                            active={route().current('teacher.index')}
+                        >
+                            Data Guru
+                        </ResponsiveNavLink>
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
@@ -174,6 +199,7 @@ export default function Authenticated({
             )}
 
             <main>{children}</main>
+            <Toaster richColors />
         </div>
     );
 }
