@@ -25,7 +25,11 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
 
         Gate::define('manage-teacher', function (User $user) {
-            return $user->role === 'admin';
+            return in_array($user->role, ['admin', 'superadmin']);
+        });
+
+        Gate::define('manage-user', function (User $user) {
+            return in_array($user->role, ['superadmin']);
         });
     }
 }

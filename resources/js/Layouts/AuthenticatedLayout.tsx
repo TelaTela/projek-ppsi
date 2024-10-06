@@ -3,6 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Toaster } from '@/Components/ui/sonner';
+import { UserRoles } from '@/enums/UserRoles';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
@@ -34,17 +35,27 @@ export default function Authenticated({
                                 >
                                     Dashboard
                                 </NavLink>
+                                {[UserRoles.SUPERADMIN].includes(user.role) && (
+                                    <NavLink
+                                        href={route('user.index')}
+                                        active={route().current('user.index')}
+                                    >
+                                        Pengguna
+                                    </NavLink>
+                                )}
+                                {[UserRoles.ADMIN, UserRoles.SUPERADMIN].includes(user.role) && (
+                                    <NavLink
+                                        href={route('teacher.index')}
+                                        active={route().current('teacher.index')}
+                                    >
+                                        Data Guru
+                                    </NavLink>
+                                )}
                                 <NavLink
-                                    href="#"
-                                    active={false}
+                                    href={route('supervision.index')}
+                                    active={route().current('supervision.index')}
                                 >
-                                    Data Supervisor
-                                </NavLink>
-                                <NavLink
-                                    href={route('teacher.index')}
-                                    active={route().current('teacher.index')}
-                                >
-                                    Data Guru
+                                    Supervisi
                                 </NavLink>
                             </div>
                         </div>
@@ -150,17 +161,27 @@ export default function Authenticated({
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        {[UserRoles.SUPERADMIN].includes(user.role) && (
+                            <ResponsiveNavLink
+                                href={route('user.index')}
+                                active={route().current('user.index')}
+                            >
+                                Pengguna
+                            </ResponsiveNavLink>
+                        )}
+                        {[UserRoles.SUPERADMIN, UserRoles.ADMIN].includes(user.role) && (
+                            <ResponsiveNavLink
+                                href={route('teacher.index')}
+                                active={route().current('teacher.index')}
+                            >
+                                Data Guru
+                            </ResponsiveNavLink>
+                        )}
                         <ResponsiveNavLink
-                            href="#"
-                            active={false}
+                            href={route('supervision.index')}
+                            active={route().current('supervision.index')}
                         >
-                            Data Supervisor
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route('teacher.index')}
-                            active={route().current('teacher.index')}
-                        >
-                            Data Guru
+                            Supervisi
                         </ResponsiveNavLink>
                     </div>
 

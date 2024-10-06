@@ -1,19 +1,19 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, router, usePage } from '@inertiajs/react';
-import { columns } from './table/columns';
-import { DataTable } from './table/data-table';
-import { Button } from '@/Components/ui/button';
-import { Plus } from 'lucide-react';
-import { useEffect } from 'react';
-import { toast } from 'sonner';
-import { Teacher } from '@/types/models';
+import { Button } from "@/Components/ui/button";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { User } from "@/types/models";
+import { Head, Link, usePage } from "@inertiajs/react";
+import { Plus } from "lucide-react";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { userColumns } from "./Partials/DataTable/user-columns";
+import { UserDataTable } from "./Partials/DataTable/UserDataTable";
 
-interface ListTeacherProps {
-    teachers: Teacher[],
+interface ListUserProps {
+    users: User[];
 }
 
-export default function ListTeacher({ teachers }: ListTeacherProps) {
-    const { flash } = usePage().props;
+export default function ListUser({ users }: ListUserProps) {
+    const flash = usePage().props.flash;
     useEffect(() => {
         if (flash.success) {
             toast.success(flash.success);
@@ -24,7 +24,7 @@ export default function ListTeacher({ teachers }: ListTeacherProps) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Data Guru
+                    Data Pengguna
                 </h2>
             }
         >
@@ -36,12 +36,12 @@ export default function ListTeacher({ teachers }: ListTeacherProps) {
                         <div className="p-6 text-gray-900">
                             <div className='flex flex-row justify-end mb-3'>
                                 <Button asChild>
-                                    <Link href={route('teacher.create')}>
-                                        <Plus className='mr-2 h-4 w-4' /> Tambah Guru
+                                    <Link href={route('user.create')}>
+                                        <Plus className='mr-2 h-4 w-4' /> Tambah Pengguna
                                     </Link>
                                 </Button>
                             </div>
-                            <DataTable columns={columns} data={teachers} />
+                            <UserDataTable columns={userColumns} data={users} />
                         </div>
                     </div>
                 </div>

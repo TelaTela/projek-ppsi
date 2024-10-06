@@ -1,18 +1,21 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupervisionController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserManagerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    // return Inertia::render('Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
+    return to_route('dashboard');
 });
 
 Route::get('/dashboard', function () {
@@ -31,6 +34,22 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{teacher}', [TeacherController::class, 'destroy'])->name('destroy');
         Route::get('/edit/{teacher}', [TeacherController::class, 'edit'])->name('edit');
         Route::put('/{teacher}', [TeacherController::class, 'update'])->name('update');
+    });
+
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/', [UserManagerController::class, 'index'])->name('index');
+        Route::get('/create', [UserManagerController::class, 'create'])->name('create');
+        Route::post('/', [UserManagerController::class, 'store'])->name('store');
+        Route::get('/edit/{user}', [UserManagerController::class, 'edit'])->name('edit');
+        Route::put('/{user}', [UserManagerController::class, 'update'])->name('update');
+        Route::delete('/{user}', [UserManagerController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('supervision')->name('supervision.')->group(function () {
+        Route::get('/', [SupervisionController::class, 'index'])->name('index');
+        Route::get('/{teacher}', [SupervisionController::class, 'start'])->name('start');
+        Route::post('/{teacher}', [SupervisionController::class, 'save'])->name('save');
+        Route::get('/check/{teacher}', [SupervisionController::class, 'check'])->name('check');
     });
 });
 

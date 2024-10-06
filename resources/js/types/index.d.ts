@@ -3,6 +3,21 @@ export interface User {
     name: string;
     email: string;
     email_verified_at?: string;
+    role: UserRole;
+}
+
+export interface PerformanceIndicator {
+    name: string,
+    items: string[],
+}
+
+export interface PerformanceIndicatorObject {
+    [key: string]: PerformanceIndicator;
+}
+
+export interface PerformanceItem {
+    indicators: PerformanceIndicatorObject,
+    levels: number[][],
 }
 
 export type PageProps<
@@ -11,4 +26,7 @@ export type PageProps<
     auth: {
         user: User;
     };
+    flash: {
+        success: ?string;
+    }
 };

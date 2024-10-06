@@ -1,18 +1,9 @@
 import { Button } from "@/Components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/ui/dropdown-menu";
+import { Teacher } from "@/types/models";
 import { router } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-
-export type Teacher = {
-    id: number,
-    name: string,
-    subject: string,
-    class: string,
-    email: string,
-    created_at: Date,
-    updated_at: Date
-}
 
 export const columns: ColumnDef<Teacher>[] = [
     {

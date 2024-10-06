@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Teacher extends Model
+class Supervision extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Teacher extends Model
      *
      * @var string
      */
-    protected $table = 'teachers';
+    protected $table = 'supervisions';
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -30,14 +30,13 @@ class Teacher extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'subject',
-        'class',
-        'email',
+        'item_number',
+        'checked_indicators',
+        'supervised_at'
     ];
 
-    public function supervision(): HasOne
+    public function teacher(): HasOne
     {
-        return $this->hasOne(Supervision::class);
+        return $this->hasOne(Teacher::class);
     }
 }

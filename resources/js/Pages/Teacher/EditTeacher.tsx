@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import TeacherForm from './Partials/TeacherForm';
-import { Teacher } from './table/columns';
+import { Teacher } from '@/types/models';
 
 interface EditTeacherProps {
     teacher: Teacher,
