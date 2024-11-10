@@ -25,7 +25,7 @@ export default function EditUser({ user }: EditUserProps) {
             name: '',
             email: '',
             password: '',
-            role: '',
+            role: UserRoles.SUPERVISOR,
         },
         values: {
             name: user.name,
