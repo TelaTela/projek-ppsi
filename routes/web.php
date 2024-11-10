@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('supervision')->name('supervision.')->group(function () {
         Route::get('/', [SupervisionController::class, 'index'])->name('index');
+        Route::get('/self-check', [SupervisionController::class, 'selfCheck'])->name('selfCheck');
         Route::get('/{teacher}', [SupervisionController::class, 'start'])->name('start');
         Route::post('/{teacher}', [SupervisionController::class, 'save'])->name('save');
         Route::get('/check/{teacher}', [SupervisionController::class, 'check'])->name('check');

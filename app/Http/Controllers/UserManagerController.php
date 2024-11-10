@@ -18,7 +18,7 @@ class UserManagerController extends Controller
     public function index()
     {
         return Inertia::render('UserManager/ListUser', [
-            'users' => User::all()->toArray(),
+            'users' => User::whereNot('role', 'guru')->get()->toArray(),
         ]);
     }
 

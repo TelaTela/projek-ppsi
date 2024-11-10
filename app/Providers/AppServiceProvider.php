@@ -31,5 +31,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('manage-user', function (User $user) {
             return in_array($user->role, ['superadmin']);
         });
+
+        Gate::define('do-supervision', function (User $user) {
+            return in_array($user->role, ['supervisor', 'superadmin']);
+        });
+
+        Gate::define('view-supervision', function (User $user) {
+            return in_array($user->role, ['guru', 'supervisor', 'superadmin']);
+        });
     }
 }

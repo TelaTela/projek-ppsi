@@ -2,7 +2,12 @@ import { Button } from "@/Components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/Components/ui/form";
 import { Input } from "@/Components/ui/input";
 
-export default function TeacherForm({ form, onSubmit }) {
+interface TeacherFormProps {
+    form: any;
+    onSubmit: any;
+}
+
+export default function TeacherForm({ form, onSubmit }: TeacherFormProps) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>

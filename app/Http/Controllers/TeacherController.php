@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class TeacherController extends Controller
@@ -27,7 +29,16 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
-        Teacher::create($request->all());
+        $teacher = Teacher::create($request->all());
+
+        $userData = [
+            'name' => $teacher->name,
+            'email' => $teacher->email,
+            'password' => Hash::make('12345678'),
+            'role' => 'guru',
+        ];
+
+        $user = User::create($userData);
 
         $request->session()->flash('success', 'Berhasil menambah data guru.');
 
@@ -57,6 +68,11 @@ class TeacherController extends Controller
 
         $teacher->update($request->all());
 
+        $user = User::where('email', $teacher->email)->first();
+        $user->name = $teacher->name;
+        $user->email = $teacher->email;
+        $user->save();
+
         $request->session()->flash('success', 'Berhasil mengubah data guru.');
 
         return to_route('teacher.index');
@@ -64,6 +80,8 @@ class TeacherController extends Controller
 
     public function destroy(Request $request, Teacher $teacher)
     {
+        $user = User::where('email', $teacher->email)->first();
+        $user->delete();
         $teacher->delete();
 
         $request->session()->flash('success', 'Berhasil menghapus data guru.');

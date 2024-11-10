@@ -4,60 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class SupervisionController extends Controller
 {
     public function index()
     {
-        $performanceItems = config('performance_items');
+        Gate::authorize('do-supervision');
 
         $teachers = Teacher::with(['supervision'])->get();
-        $supervisionLevels = [];
-        foreach ($teachers as $key => $teacher) {
-            $teacherKey = intval($key);
-
-            /**
-             * @var Supervision $supervision
-             */
-            $supervision = $teacher->supervision;
-
-            if (!$supervision) {
-                $supervisionLevels[$teacherKey] = null;
-                continue;
-            }
-
-            $performanceItem = $performanceItems[$supervision->item_number];
-            $levelsRequirement = $performanceItem['levels'];
-            $indicatorsMet = [];
-            $checkedIndicators = json_decode($supervision->checked_indicators, associative: true)[15];
-            foreach ($checkedIndicators as $key => $indicator) {
-                if (in_array(true, $indicator)) {
-                    $indicatorsMet[] = intval($key);
-                }
-            }
-
-            $highestPoint = 0;
-            $levelWithHighestMpoint = 0;
-            foreach ($levelsRequirement as $level => $requirement) {
-                $requirementNotMet = collect($requirement)->diff($indicatorsMet);
-                $point = count($requirement) - $requirementNotMet->count();
-
-                if ($point > $highestPoint) {
-                    $levelWithHighestMpoint = $level;
-                    $highestPoint = $point;
-                }
-            }
-
-            $supervisionLevels[$teacherKey] = $levelWithHighestMpoint;
-        }
-
         $teachersArray = $teachers->toArray();
-        foreach ($teachersArray as $key => $teacher) {
-            if (!isset($teacher['supervision'])) continue;
 
-            $teachersArray[$key]['supervision']['level'] = $supervisionLevels[$key];
-        }
+        // dd($teachersArray);
 
         return Inertia::render('Supervision/ListSupervision', [
             'teachers' => $teachersArray,
@@ -67,6 +27,8 @@ class SupervisionController extends Controller
 
     public function start(Teacher $teacher)
     {
+        Gate::authorize('do-supervision');
+
         return Inertia::render('Supervision/StartSupervision', [
             'teacher' => $teacher->toArray(),
             'performanceItem' => config('performance_items.15'),
@@ -76,6 +38,8 @@ class SupervisionController extends Controller
 
     public function save(Request $request, Teacher $teacher)
     {
+        Gate::authorize('do-supervision');
+
         $evaluations = $request->all();
         $evaluationsArray = [];
         foreach ($evaluations as $key => $evaluation) {
@@ -112,6 +76,21 @@ class SupervisionController extends Controller
 
     public function check(Teacher $teacher)
     {
+        Gate::authorize('view-supervision');
+
+        return Inertia::render('Supervision/CheckSupervision', [
+            'teacher' => $teacher->loadMissing(['supervision'])->toArray(),
+            'performanceItem' => config('performance_items.15'),
+            'performanceItemNumber' => 15,
+        ]);
+    }
+
+    public function selfCheck()
+    {
+        $user = Auth::user();
+        $teacher = Teacher::where('email', $user->email)->firstOrFail();
+        Gate::authorize('view-supervision');
+
         return Inertia::render('Supervision/CheckSupervision', [
             'teacher' => $teacher->loadMissing(['supervision'])->toArray(),
             'performanceItem' => config('performance_items.15'),

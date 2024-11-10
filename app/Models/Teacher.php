@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -36,8 +37,24 @@ class Teacher extends Model
         'email',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'initial',
+    ];
+
     public function supervision(): HasOne
     {
         return $this->hasOne(Supervision::class);
+    }
+
+    public function initial(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, array $attributes) => substr(strtoupper(preg_replace('/[^a-z]+/i', '', $attributes['name'])), 0, 2),
+        );
     }
 }

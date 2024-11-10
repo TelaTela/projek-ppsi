@@ -14,6 +14,7 @@ export type User = {
 export type Teacher = {
     id: number,
     name: string,
+    initial: string,
     subject: string,
     class: string,
     email: string,
@@ -22,12 +23,18 @@ export type Teacher = {
     updated_at: Date
 }
 
+type SuperVisionSimpleResult = {
+    level: number,
+    indicatorsMet: number[],
+}
+
 export type Supervision = {
     id: number,
     teacher_id: ?number,
     item_number: number,
     checked_indicators: string,
     level?: number,
+    simple_result: SuperVisionSimpleResult,
     teacher: Teacher,
     supervised_at: ?string,
     created_at: string,

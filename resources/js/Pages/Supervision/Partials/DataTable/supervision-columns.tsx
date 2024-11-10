@@ -28,7 +28,7 @@ export function supervisionColumns(performanceItem: PerformanceItem): ColumnDef<
             header: 'Level',
             cell: ({ row }) => {
                 const supervision = row.original.supervision;
-                const level = supervision?.level;
+                const level = supervision?.simple_result.level;
 
                 let className = '';
                 switch (level) {
@@ -51,7 +51,7 @@ export function supervisionColumns(performanceItem: PerformanceItem): ColumnDef<
 
                 return (
                     <Badge className={className}>
-                        {supervision?.level ? `Level ${supervision?.level}` : 'Belum dinilai'}
+                        {level ? `Level ${level}` : 'Belum dinilai'}
                     </Badge>
                 )
             }

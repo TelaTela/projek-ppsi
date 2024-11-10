@@ -51,12 +51,22 @@ export default function Authenticated({
                                         Data Guru
                                     </NavLink>
                                 )}
-                                <NavLink
-                                    href={route('supervision.index')}
-                                    active={route().current('supervision.index')}
-                                >
-                                    Supervisi
-                                </NavLink>
+                                {[UserRoles.SUPERVISOR, UserRoles.SUPERADMIN].includes(user.role) && (
+                                    <NavLink
+                                        href={route('supervision.index')}
+                                        active={route().current('supervision.index')}
+                                    >
+                                        Supervisi
+                                    </NavLink>
+                                )}
+                                {[UserRoles.GURU].includes(user.role) && (
+                                    <NavLink
+                                        href={route('supervision.selfCheck')}
+                                        active={route().current('supervision.selfCheck')}
+                                    >
+                                        Cek Hasil Supervisi
+                                    </NavLink>
+                                )}
                             </div>
                         </div>
 
@@ -177,12 +187,22 @@ export default function Authenticated({
                                 Data Guru
                             </ResponsiveNavLink>
                         )}
-                        <ResponsiveNavLink
-                            href={route('supervision.index')}
-                            active={route().current('supervision.index')}
-                        >
-                            Supervisi
-                        </ResponsiveNavLink>
+                        {[UserRoles.SUPERVISOR, UserRoles.SUPERADMIN].includes(user.role) && (
+                            <ResponsiveNavLink
+                                href={route('supervision.index')}
+                                active={route().current('supervision.index')}
+                            >
+                                Supervisi
+                            </ResponsiveNavLink>
+                        )}
+                        {[UserRoles.GURU].includes(user.role) && (
+                            <ResponsiveNavLink
+                                href={route('supervision.selfCheck')}
+                                active={route().current('supervision.selfCheck')}
+                            >
+                                Cek Hasil Supervisi
+                            </ResponsiveNavLink>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
