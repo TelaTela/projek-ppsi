@@ -37,7 +37,7 @@ export default function UserForm({ form, onSubmit }: UserFormProps) {
                     name='email'
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Mata Pelajaran</FormLabel>
+                            <FormLabel>E-Mail</FormLabel>
                             <FormControl>
                                 <Input type="email" placeholder='mail@example.com' {...field} />
                             </FormControl>
