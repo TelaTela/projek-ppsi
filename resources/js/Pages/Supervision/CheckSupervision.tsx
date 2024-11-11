@@ -76,7 +76,7 @@ export default function CheckSupervision({ teacher, performanceItem, performance
                                 <span>{teacher.class} - {teacher.subject}</span>
                             </div>
                             <SupervisionLevelBadge level={teacher.supervision?.simple_result.level} />
-                            <p className="text-center px-40">{levelDescription}</p>
+                            <p className="text-center px-80">{levelDescription}</p>
                         </div>
                     </div>
                     {indicatorsInfo}
