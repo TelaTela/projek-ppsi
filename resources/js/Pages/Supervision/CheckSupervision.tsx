@@ -29,6 +29,31 @@ export default function CheckSupervision({ teacher, performanceItem, performance
         )
     });
 
+    let levelDescription = '';
+    switch (teacher.supervision?.simple_result.level) {
+        case 4:
+            levelDescription = 'Suasana pembelajaran dinamis dengan adanya interaksi antar siswa, \
+                                interaksi siswa dengan guru, siswa antusias dalam belajar dan \
+                                suasana kelas menyenangkan dan menarik sehingga berdampak pada \
+                                pencapaian tujuan pembelajaran.';
+            break;
+        case 3:
+            levelDescription = 'Suasana pembelajaran dinamis dengan adanya interaksi antarsiswa, \
+                                interaksi siswa dengan guru, siswa antusias dalam belajar dan \
+                                suasana kelas menyenangkan dan menarik.';
+            break;
+        case 2:
+            levelDescription = 'Suasana kelas tertib dan terlihat ada interaksi timbal balik antar \
+                                siswa dengan siswa dan siswa dengan guru.';
+            break;
+        case 1:
+            levelDescription = 'Suasana kelas tertib walaupun penyampaian materi berlangsung satu \
+                                arah dari guru ke siswa.';
+            break;
+        default:
+            levelDescription = '-';
+    }
+
     return (
         <AuthenticatedLayout
             header={
@@ -51,6 +76,7 @@ export default function CheckSupervision({ teacher, performanceItem, performance
                                 <span>{teacher.class} - {teacher.subject}</span>
                             </div>
                             <SupervisionLevelBadge level={teacher.supervision?.simple_result.level} />
+                            <p className="text-center">{levelDescription}</p>
                         </div>
                     </div>
                     {indicatorsInfo}
