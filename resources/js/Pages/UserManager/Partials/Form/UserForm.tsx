@@ -50,7 +50,7 @@ export default function UserForm({ form, onSubmit }: UserFormProps) {
                     name='password'
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Kelas</FormLabel>
+                            <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input type="password" placeholder='password user' {...field} />
                             </FormControl>

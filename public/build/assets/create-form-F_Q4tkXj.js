@@ -1,1 +1,0 @@
-import{z as m,t as e}from"./index-D6BRaVFo.js";import{u as r}from"./index.esm-BwhpoWF-.js";import"./app-DXcRw7gk.js";const t=m.object({name:m.string().min(3).max(191),subject:m.string().min(1).max(191),class:m.string().min(1).max(191),email:m.string().email()});function o(){r({resolver:e(t),defaultValues:{name:"",subject:"",class:"",email:""}})}export{o as CreateForm};
